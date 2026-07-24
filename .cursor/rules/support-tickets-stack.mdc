@@ -1,0 +1,25 @@
+---
+description: Support Tickets stack, UI/API choice, and Core vs Stretch scope
+alwaysApply: true
+---
+
+# Stack & scope (Core)
+
+- **Product:** internal Support Ticket Management System (Core tier only).
+- **Stack:** Drupal 10 Composer project (`web/` docroot). Feature code lives in custom module `support_tickets` at `web/modules/custom/support_tickets/`.
+- **UI:** Drupal Form API + Views + Twig inside the module — **no** separate React/Vue/SPA frontend.
+- **API:** core **JSON:API** only — no custom REST Resource plugins unless explicitly requested.
+- **Users:** core `user` entity; seed via Drush. No user-management UI.
+- **Local run:** prefer DDEV (`docroot: web`); keep non-DDEV Composer/Drush steps in README as secondary.
+
+## Core vs Stretch
+
+Do **not** expand into Stretch unless the user explicitly asks:
+
+- Agent vs viewer roles / fine-grained ACLs beyond the module’s custom permissions
+- Full user CRUD UI
+- Docker/CI pipelines, OpenAPI/API docs sites
+- Contrib State Machine / Workflow modules
+- Pagination/sort beyond default Views / JSON:API
+
+When unsure, implement the smallest Core change. Prefer updating `spec.md` / `TASKS.md` over inventing features.

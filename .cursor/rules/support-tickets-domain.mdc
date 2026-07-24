@@ -1,0 +1,37 @@
+---
+description: Ticket/Comment entities and status state-machine conventions
+alwaysApply: true
+---
+
+# Domain conventions
+
+## Entities
+
+| Entity | Type id | Notes |
+|--------|---------|--------|
+| Ticket | `support_ticket` | Content entity |
+| Comment | `support_ticket_comment` | Not core `comment` |
+| User | `user` | Core only |
+
+**Ticket fields:** `title` (string, required), `description` (`string_long`, required), `priority` (`list_string`: low/medium/high/urgent, default medium), `status` (`list_string` workflow — not Entity Published), `assigned_to` (user ref, **optional**), `created_by` (owner), `created`, `changed`.
+
+**Comment fields:** `ticket_id` → ticket, `message` (`string_long`), `created_by`, `created`. Append-oriented in Core UI.
+
+New tickets default to status `open`.
+
+## Status state machine
+
+Allowed transitions only:
+
+```
+open → in_progress → resolved → closed
+open → cancelled
+in_progress → cancelled
+```
+
+- Same-status save is allowed (no-op).
+- `closed` and `cancelled` are **terminal**.
+- Enforce in a **service + validation constraint** shared by forms and JSON:API — not form-only checks.
+- Invalid transitions → clear validation error surfaced in UI (not raw exceptions).
+
+Status machine names: `open`, `in_progress`, `resolved`, `closed`, `cancelled`.

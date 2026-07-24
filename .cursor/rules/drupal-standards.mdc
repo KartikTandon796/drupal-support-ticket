@@ -1,0 +1,29 @@
+---
+description: Drupal coding standards and PHPUnit expectations for support_tickets
+globs: web/modules/custom/support_tickets/**/*.{php,module,install,inc,yml,twig,css}
+alwaysApply: false
+---
+
+# Drupal coding standards
+
+- Follow **Drupal coding standards** (PHP): `declare(strict_types=1);`, useful docblocks, injectable services where appropriate, snake_case machine names, PSR-4 under `Drupal\support_tickets\`.
+- Prefer Entity API, Form API, Views config, and JSON:API over one-off controllers/SQL.
+- Module CSS/JS only via `*.libraries.yml`; keep styling scoped — do not restyle the global theme.
+- No hardcoded credentials; no `eval`; no auth bypasses.
+- Minimal diffs: match existing module patterns; do not add Composer packages unless necessary and justified.
+
+```php
+// ❌ BAD — form-only status check
+public function validateForm(array &$form, FormStateInterface $form_state): void {
+  // only place transition rules live
+}
+
+// ✅ GOOD — entity validation used by forms + JSON:API
+$violations = $ticket->validate();
+```
+
+## Tests
+
+- Use **PHPUnit** (Kernel and/or Functional) under `tests/src/`.
+- Mandatory coverage: every **valid** status transition succeeds; at least **2–3 invalid** transitions rejected with a clear error; include **API-level** rejection if JSON:API is in play.
+- After logic changes, add/update tests; say if tests were not run and why.
