@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for Support Tickets.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_install().
+ */
+function support_tickets_install(): void {
+  // View config is imported from config/install on fresh enable.
+}
+
+/**
+ * Import the Support tickets Views display if missing.
+ */
+function support_tickets_update_10001(): void {
+  $config_path = \Drupal::service('extension.list.module')->getPath('support_tickets') . '/config/install/views.view.support_tickets.yml';
+  if (!file_exists($config_path) || \Drupal::config('views.view.support_tickets')->get('id')) {
+    return;
+  }
+
+  $data = \Drupal\Component\Serialization\Yaml::decode(file_get_contents($config_path));
+  unset($data['uuid']);
+  \Drupal::configFactory()->getEditable('views.view.support_tickets')->setData($data)->save(TRUE);
+}

@@ -52,7 +52,7 @@ use Drupal\user\EntityOwnerTrait;
  *     "add-form" = "/support-tickets/add",
  *     "edit-form" = "/support-tickets/{support_ticket}/edit",
  *     "delete-form" = "/support-tickets/{support_ticket}/delete",
- *     "collection" = "/support-tickets"
+ *     "collection" = "/admin/content/support-tickets"
  *   }
  * )
  */

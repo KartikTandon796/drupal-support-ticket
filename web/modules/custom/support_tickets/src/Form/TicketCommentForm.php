@@ -17,6 +17,20 @@ class TicketCommentForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
+  public function form(array $form, FormStateInterface $form_state): array {
+    $form = parent::form($form, $form_state);
+
+    // When opened from a ticket detail page, ticket is already set.
+    if (!$this->entity->get('ticket_id')->isEmpty()) {
+      $form['ticket_id']['#access'] = FALSE;
+    }
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save(array $form, FormStateInterface $form_state): int {
     $result = parent::save($form, $form_state);
     $entity = $this->entity;

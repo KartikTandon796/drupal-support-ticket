@@ -1,17 +1,77 @@
 {#
 /**
  * @file
- * Default theme implementation to display a support ticket.
+ * Default theme implementation to display a support ticket detail page.
  *
  * Available variables:
  * - ticket: The ticket entity.
- * - content: Rendered ticket fields.
+ * - title, description, status, status_label, priority, priority_label
+ * - assignee_label, created_by_label, created_formatted, changed_formatted
+ * - comments: list of {author, created, message}
+ * - content.ticket_update / content.comment_form: action panels
+ * - back_url: tickets list URL
  * - attributes: HTML attributes for the containing element.
  */
 #}
-<article{{ attributes.addClass('support-ticket') }}>
-  <h1{{ title_attributes }}>{{ ticket.label }}</h1>
-  <div class="support-ticket__content">
-    {{ content }}
+<article{{ attributes }}>
+  <a class="support-ticket-detail__back" href="{{ back_url }}">{{ '← All tickets'|t }}</a>
+
+  <div class="support-ticket-detail__card">
+    <h1 class="support-ticket-detail__title">{{ title }}</h1>
+
+    <div class="support-ticket-detail__badges">
+      <span class="st-badge st-badge--status-{{ status }}">{{ status_label }}</span>
+      <span class="st-badge st-badge--priority-{{ priority }}">{{ priority_label }}</span>
+    </div>
+
+    {% if description %}
+      <div class="support-ticket-detail__description">{{ description }}</div>
+    {% endif %}
+
+    <dl class="support-ticket-detail__meta">
+      <div class="support-ticket-detail__meta-item">
+        <dt>{{ 'Assignee'|t }}</dt>
+        <dd>{{ assignee_label }}</dd>
+      </div>
+      <div class="support-ticket-detail__meta-item">
+        <dt>{{ 'Created by'|t }}</dt>
+        <dd>{{ created_by_label }}</dd>
+      </div>
+      <div class="support-ticket-detail__meta-item">
+        <dt>{{ 'Created'|t }}</dt>
+        <dd>{{ created_formatted }}</dd>
+      </div>
+      <div class="support-ticket-detail__meta-item">
+        <dt>{{ 'Updated'|t }}</dt>
+        <dd>{{ changed_formatted }}</dd>
+      </div>
+    </dl>
   </div>
+
+  <section class="support-ticket-detail__panel support-ticket-detail__panel--comments" aria-label="{{ 'Comments'|t }}">
+    <h2 class="support-ticket-detail__panel-title">{{ 'Comments'|t }}</h2>
+    {% if comments %}
+      <ul class="support-ticket-detail__comments">
+        {% for comment in comments %}
+          <li class="support-ticket-detail__comment">
+            <div class="support-ticket-detail__comment-meta">
+              <span class="support-ticket-detail__comment-author">{{ comment.author }}</span>
+              <time>{{ comment.created }}</time>
+            </div>
+            <p class="support-ticket-detail__comment-body">{{ comment.message }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="support-ticket-detail__comments-empty">{{ 'No comments yet.'|t }}</p>
+    {% endif %}
+  </section>
+
+  {% if content.ticket_update %}
+    {{ content.ticket_update }}
+  {% endif %}
+
+  {% if content.comment_form %}
+    {{ content.comment_form }}
+  {% endif %}
 </article>

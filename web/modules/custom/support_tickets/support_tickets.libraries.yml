@@ -1,0 +1,5 @@
+support_tickets:
+  version: 1.x
+  css:
+    theme:
+      css/support_tickets.css: {}
