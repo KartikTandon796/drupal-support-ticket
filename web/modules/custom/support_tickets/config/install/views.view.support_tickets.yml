@@ -522,7 +522,6 @@ display:
           plugin_id: text_custom
           empty: true
           content: 'No tickets match your search.'
-          tokenize_spaces: 0
       sorts:
         changed:
           id: changed
@@ -570,7 +569,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -583,7 +581,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
         combine:
           id: combine
           table: views
@@ -681,7 +678,6 @@ display:
           empty_table: false
           caption: ''
           description: ''
-          class: support-tickets-table
       row:
         type: fields
       query:

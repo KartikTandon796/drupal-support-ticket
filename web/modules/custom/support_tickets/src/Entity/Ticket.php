@@ -47,6 +47,9 @@ use Drupal\user\EntityOwnerTrait;
  *     "owner" = "created_by",
  *     "uid" = "created_by"
  *   },
+ *   constraints = {
+ *     "TicketStatusTransition" = {}
+ *   },
  *   links = {
  *     "canonical" = "/support-tickets/{support_ticket}",
  *     "add-form" = "/support-tickets/add",

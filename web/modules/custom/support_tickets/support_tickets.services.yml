@@ -1,0 +1,3 @@
+services:
+  support_tickets.status_transition_validator:
+    class: Drupal\support_tickets\Service\TicketStatusTransitionValidator

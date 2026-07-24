@@ -14,6 +14,19 @@ use Drush\Commands\DrushCommands;
 class SupportTicketsCommands extends DrushCommands {
 
   /**
+   * Valid transition paths from open to each target status (exclusive of open).
+   *
+   * @var array<string, list<string>>
+   */
+  private const PATHS_FROM_OPEN = [
+    'open' => [],
+    'in_progress' => ['in_progress'],
+    'resolved' => ['in_progress', 'resolved'],
+    'closed' => ['in_progress', 'resolved', 'closed'],
+    'cancelled' => ['cancelled'],
+  ];
+
+  /**
    * Seed demo users, tickets, and comments.
    *
    * @command support_tickets:seed
@@ -101,11 +114,17 @@ class SupportTicketsCommands extends DrushCommands {
         'title' => $spec['title'],
         'description' => $spec['description'],
         'priority' => $spec['priority'],
-        'status' => $spec['status'],
+        'status' => TicketInterface::STATUS_OPEN,
         'created_by' => $spec['created_by'],
         'assigned_to' => $spec['assigned_to'],
       ]);
-      $ticket->save();
+      $this->saveValidated($ticket);
+
+      foreach (self::PATHS_FROM_OPEN[$spec['status']] as $next_status) {
+        $ticket->setStatusValue($next_status);
+        $this->saveValidated($ticket);
+      }
+
       $created++;
 
       $comment_storage->create([
@@ -128,6 +147,21 @@ class SupportTicketsCommands extends DrushCommands {
     $this->logger()->notice(dt('Demo logins (password for all: "password"): @users', [
       '@users' => implode(', ', array_keys($users)),
     ]));
+  }
+
+  /**
+   * Validates then saves an entity; throws on violation.
+   */
+  protected function saveValidated(TicketInterface $ticket): void {
+    $violations = $ticket->validate();
+    if ($violations->count() > 0) {
+      $messages = [];
+      foreach ($violations as $violation) {
+        $messages[] = (string) $violation->getMessage();
+      }
+      throw new \RuntimeException('Ticket validation failed: ' . implode('; ', $messages));
+    }
+    $ticket->save();
   }
 
   /**
