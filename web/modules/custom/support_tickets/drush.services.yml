@@ -1,0 +1,5 @@
+services:
+  support_tickets.commands:
+    class: Drupal\support_tickets\Commands\SupportTicketsCommands
+    tags:
+      - { name: drush.command }

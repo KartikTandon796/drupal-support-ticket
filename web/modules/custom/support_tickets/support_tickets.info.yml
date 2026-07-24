@@ -1,0 +1,11 @@
+name: 'Support Tickets'
+type: module
+description: 'Core support ticket management: tickets, comments, status workflow, and JSON:API.'
+package: Custom
+core_version_requirement: ^10
+dependencies:
+  - drupal:user
+  - drupal:views
+  - drupal:jsonapi
+  - drupal:serialization
+  - drupal:options

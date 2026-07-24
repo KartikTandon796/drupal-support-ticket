@@ -1,0 +1,29 @@
+# Composer dependencies
+/vendor/
+
+# Drupal settings and files (docroot is web/)
+/web/sites/*/settings*.php
+/web/sites/*/services*.yml
+/web/sites/*/files
+/web/sites/*/private
+/web/sites/simpletest
+
+# Keep default.settings.php and example files trackable
+!/web/sites/default/default.settings.php
+!/web/sites/default/default.services.yml
+!/web/sites/example.settings.local.php
+!/web/sites/example.sites.php
+!/web/sites/development.services.yml
+
+# DDEV — commit .ddev/config.yaml; ignore local/generated artifacts
+# (see also .ddev/.gitignore maintained by DDEV)
+.ddev/db_snapshots/
+.ddev/config.local.yaml
+.ddev/.ddev-docker-compose-*.yaml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~

@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a support ticket.
+ *
+ * Available variables:
+ * - ticket: The ticket entity.
+ * - content: Rendered ticket fields.
+ * - attributes: HTML attributes for the containing element.
+ */
+#}
+<article{{ attributes.addClass('support-ticket') }}>
+  <h1{{ title_attributes }}>{{ ticket.label }}</h1>
+  <div class="support-ticket__content">
+    {{ content }}
+  </div>
+</article>

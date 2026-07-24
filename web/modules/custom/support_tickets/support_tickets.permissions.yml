@@ -1,0 +1,16 @@
+access support tickets:
+  title: 'Access support tickets'
+  description: 'View the ticket list and ticket detail pages.'
+
+create support tickets:
+  title: 'Create support tickets'
+
+edit support tickets:
+  title: 'Edit support tickets'
+  description: 'Update ticket fields and change status (subject to the state machine).'
+
+delete support tickets:
+  title: 'Delete support tickets'
+
+add support ticket comments:
+  title: 'Add comments to support tickets'

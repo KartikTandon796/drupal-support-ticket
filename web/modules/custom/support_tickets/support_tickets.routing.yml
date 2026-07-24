@@ -1,0 +1,4 @@
+# Entity HTML routes (canonical, add, edit, delete, collection) are provided
+# via DefaultHtmlRouteProvider on the support_ticket and support_ticket_comment
+# entity type annotations. Additional UI routes (e.g. comment form on ticket
+# detail) will be added in the Forms + Views step.

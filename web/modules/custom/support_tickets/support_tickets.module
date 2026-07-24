@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Hooks and theme registrations for the Support Tickets module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_theme().
+ */
+function support_tickets_theme($existing, $type, $theme, $path): array {
+  return [
+    'support_ticket' => [
+      'render element' => 'elements',
+      'template' => 'support-ticket',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for support_ticket templates.
+ *
+ * Default template: support-ticket.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: Structured array of ticket content.
+ */
+function template_preprocess_support_ticket(array &$variables): void {
+  $variables['ticket'] = $variables['elements']['#support_ticket'];
+  foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
