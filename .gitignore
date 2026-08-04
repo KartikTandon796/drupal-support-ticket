@@ -1,6 +1,9 @@
 # Composer dependencies
 /vendor/
 
+# Drupal core (installed via Composer — do not commit)
+/web/core/
+
 # Drupal settings and files (docroot is web/)
 /web/sites/*/settings*.php
 /web/sites/*/services*.yml
