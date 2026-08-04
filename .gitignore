@@ -11,6 +11,10 @@
 /web/sites/*/private
 /web/sites/simpletest
 
+# Local databases / stray dev paths (do not commit)
+/web/db
+/web/localhost/
+
 # Keep default.settings.php and example files trackable
 !/web/sites/default/default.settings.php
 !/web/sites/default/default.services.yml
